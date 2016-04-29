@@ -1,8 +1,6 @@
 log.txt
-local-values.conf
 target
 .gitignore
-*~
 bin
 *.idea
 *.ipr
