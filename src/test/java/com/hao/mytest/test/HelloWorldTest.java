@@ -75,5 +75,6 @@ public class HelloWorldTest {
         for (Operation op : Operation.values()) {
             System.out.printf("%f %s %f = %f%n", x, op, y, op.apply(x, y));
         }
+        System.out.printf("" + Operation.PLUS.apply(x, y));
     }
 }

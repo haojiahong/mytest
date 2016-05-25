@@ -1,4 +1,4 @@
-package com.hao.mytest.designpatterns.abstractfactorypatterns;
+package com.hao.mytest.designpatterns.factorymethodpatterns;
 
 /**
  * Created by haojiahong on 16/4/8.
