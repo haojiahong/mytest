@@ -77,4 +77,17 @@ public class HelloWorldTest {
         }
         System.out.printf("" + Operation.PLUS.apply(x, y));
     }
+
+    @Test
+    public void testNormal() {
+        Integer i = null;
+        doNormal(i);
+
+    }
+
+    private void doNormal(int i) {
+        System.out.println(i);
+    }
+
+
 }
