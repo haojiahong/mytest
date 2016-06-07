@@ -30,5 +30,6 @@
     </rabbit:direct-exchange>
 
     <!--定义rabbit template用于数据的接收和发送-->
-    <rabbit:template id="myAmqpTemplate" connection-factory="connectionFactory" exchange="myChange"/>
+    <rabbit:template id="myAmqpTemplate" connection-factory="connectionFactory" exchange="myChange"
+                     routing-key="hello"/>
 </beans>
