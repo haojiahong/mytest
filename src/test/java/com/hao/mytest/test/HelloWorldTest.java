@@ -212,6 +212,7 @@ public class HelloWorldTest {
     @Test
     public void testGitVersion() {
         System.out.println("版本回退真是蛋疼");
+        System.out.println("版本回退真是蛋疼2");
     }
 
 
