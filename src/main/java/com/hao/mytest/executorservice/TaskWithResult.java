@@ -14,7 +14,6 @@ public class TaskWithResult implements Callable<String> {
     }
 
 
-    @Override
     public String call() throws Exception {
         System.out.println("call方法被自动调用，干活。。" + Thread.currentThread().getName());
         for (int i = 99999999; i > 0; i--) ;//模拟耗时操作
