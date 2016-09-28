@@ -216,5 +216,15 @@ public class HelloWorldTest {
         System.out.println("版本回退真是蛋疼3");
     }
 
+    @Test
+    public void testCastLong() {
+        List<Long> longList = Lists.newArrayList(1l, 2l, 3l);
+        List<Integer> integerList = Lists.newArrayList();
+        for (Long id : longList) {
+            integerList.add(id.intValue());
+        }
+        System.out.println(JSON.toJSONString(integerList));
+    }
+
 
 }
