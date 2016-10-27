@@ -226,5 +226,40 @@ public class HelloWorldTest {
         System.out.println(JSON.toJSONString(integerList));
     }
 
+    @Test
+    public void testBigDecimal() {
+        BigDecimal a = new BigDecimal(3625);
+        BigDecimal b = new BigDecimal(100);
+        BigDecimal c = a.divide(b, BigDecimal.ROUND_DOWN);
+        BigDecimal total = new BigDecimal(4240);
+        BigDecimal targetValue = new BigDecimal(1000);
+        BigDecimal num = total.divide(targetValue, BigDecimal.ROUND_DOWN);
+
+        System.out.println(c.toString());
+    }
+
+    @Test
+    public void testBigDecimal2() {
+        BigDecimal a = new BigDecimal(3625);
+        BigDecimal b = new BigDecimal(100);
+        BigDecimal c = a.divideToIntegralValue(b);
+        System.out.println(c.toString());
+    }
+
+    @Test
+    public void testUnion() {
+        List<String> list1 = new ArrayList<String>();
+        List<String> list2 = new ArrayList<String>();
+        list1.add("abc");
+        list2.add("abc");
+        list1.add("123");
+        list2.add("123");
+        list1.add("ABC");
+        list2.add("XYZ");
+        list1.retainAll(list2);
+        System.out.println(list1.toString());
+        System.out.println("交集元素个数是：" + list1.size());
+    }
+
 
 }

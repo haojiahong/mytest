@@ -32,4 +32,5 @@ public class CGLibProxy implements MethodInterceptor {
     public void after() {
         System.out.println("after");
     }
+
 }
