@@ -261,5 +261,18 @@ public class HelloWorldTest {
         System.out.println("交集元素个数是：" + list1.size());
     }
 
+    @Test
+    public void testObject() {
+        List<Integer> integerList = new ArrayList<Integer>();
+        integerList.add(1);
+        integerList.add(2);
+        integerList.add(3);
+
+        Object o = integerList;
+        List<Integer> result = (List<Integer>) o;
+        System.out.println(result.get(0));
+
+    }
+
 
 }

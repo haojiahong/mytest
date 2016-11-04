@@ -8,11 +8,38 @@
             http://www.springframework.org/schema/context/spring-context-3.1.xsd
             http://www.springframework.org/schema/aop
             http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+    <!-- order越小越先加载，此项目最小从10开始，方便后面插队，此处是20 -->
+    <context:property-placeholder order="20" ignore-unresolvable="true" location="classpath:application.properties"/>
     <!-- 使能AOP-->
     <aop:aspectj-autoproxy/>
     <!-- 自动装载bean使能-->
-    <context:component-scan base-package="com.hao.myrabbitmq"/>
+    <context:component-scan base-package="com.hao"/>
     <context:annotation-config/>
+
+    <!-- redis连接池的配置-->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="2048"/>
+        <property name="maxIdle" value="200"/>
+        <property name="numTestsPerEvictionRun" value="10"/>
+        <property name="timeBetweenEvictionRunsMillis" value="30000"/>
+        <property name="minEvictableIdleTimeMillis" value="-1"/>
+        <property name="softMinEvictableIdleTimeMillis" value="10000"/>
+        <property name="maxWaitMillis" value="1500"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="jmxEnabled" value="true"/>
+        <property name="minIdle" value="10"/>
+    </bean>
+
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg index="0" ref="jedisPoolConfig"/>
+        <constructor-arg index="1" value="${redis.host}"/>
+        <constructor-arg index="2" value="${redis.port}" type="int"/>
+        <constructor-arg index="3" value="3000" type="int"/>
+        <constructor-arg index="4" value="${redis.auth}"/>
+    </bean>
 
     <!-- 声明一个事物管理 -->
     <!--<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
