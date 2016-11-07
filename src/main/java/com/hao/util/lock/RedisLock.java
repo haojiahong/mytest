@@ -18,6 +18,8 @@ public class RedisLock {
     public static final long ONE_MILLI_NANOS = 1000000L;
     //锁的超时时间（秒），过期删除
     public static final int EXPIRE = 30;
+    //默认超时时间（毫秒）
+    public static final long DEFAULT_TIME_OUT = 15 * 1000;
 
     private final Random r = new Random();
     private Jedis jedis;
@@ -51,7 +53,19 @@ public class RedisLock {
         return false;
     }
 
+    public boolean lock() throws InterruptedException {
+        return lock(DEFAULT_TIME_OUT);
+    }
 
+    // 无论是否加锁成功，必须调用
+    public void unlock() {
+        try {
+            if (locked)
+                jedis.del(key);
+        } finally {
+            pool.returnResource(jedis);
+        }
+    }
 
 
 }
