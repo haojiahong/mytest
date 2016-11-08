@@ -3,13 +3,11 @@ package com.hao.mytest.test;
 import com.hao.seckill.CacheLockInterceptor;
 import com.hao.seckill.SecKillService;
 import com.hao.seckill.impl.SecKillServiceImpl;
-import com.hao.util.SpringIocUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import redis.clients.jedis.JedisPool;
 
 import java.lang.reflect.Proxy;
 
@@ -31,7 +29,7 @@ public class SecKillTest {
     @Test
     public void secKillTest() {
         int threadCount = 1000;
-        int splitPoint = 500;
+        int splitPoint = 2;
         final SecKillServiceImpl secKillServiceImpl = new SecKillServiceImpl();
 
 
@@ -54,7 +52,7 @@ public class SecKillTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(SecKillServiceImpl.inventory.get(commidityId1));
+        System.out.println("haojiahong---------"+SecKillServiceImpl.inventory.get(commidityId1));
         System.out.println("total cost " + (System.currentTimeMillis() - startTime));
 
     }

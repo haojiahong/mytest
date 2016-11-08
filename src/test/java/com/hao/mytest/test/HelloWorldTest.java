@@ -3,6 +3,7 @@ package com.hao.mytest.test;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.hao.mytest.effectivejava.sixteen.InstrumentedSet;
 import com.hao.mytest.effectivejava.thirty.Operation;
 import com.hao.mytest.effectivejava.twentysix.StackGeneric;
@@ -272,6 +273,55 @@ public class HelloWorldTest {
         List<Integer> result = (List<Integer>) o;
         System.out.println(result.get(0));
 
+    }
+
+    @Test
+    public void testListGo() {
+
+        class MyObject {
+            private Integer id;
+            private String name;
+
+            public MyObject(Integer id, String name) {
+                this.id = id;
+                this.name = name;
+            }
+
+            public Integer getId() {
+                return this.id;
+            }
+
+            public String getName() {
+                return this.name;
+            }
+
+            public void setId(Integer id) {
+                this.id = id;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+        }
+        MyObject myObject1 = new MyObject(1, "hao");
+        MyObject myObject2 = new MyObject(2, "hao");
+        MyObject myObject4 = new MyObject(4, "hao");
+        MyObject myObject3 = new MyObject(3, "jia");
+        List<MyObject> list = Lists.newArrayList();
+        list.add(myObject1);
+        list.add(myObject2);
+        list.add(myObject3);
+        list.add(myObject4);
+        Set<MyObject> set = Sets.newHashSet();
+        for (int i = 0; i < list.size() - 1; i++) {
+            for (int j = list.size() - 1; j > i; j--) {
+                if (list.get(j).getName().equals(list.get(i).getName())) {
+                    set.add(list.get(j));
+                }
+            }
+        }
+        System.out.println(set);
+        System.out.println(111);
     }
 
 

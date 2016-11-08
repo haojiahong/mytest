@@ -52,7 +52,7 @@ public class JedisClient {
     public static int CACHE_EXP_MONTH = 3600 * 24 * 30 * 7;
 
     /**
-     * 自己测试公司的redis使用4
+     * 自己测试公司的redis使用
      */
     public static int DEFAULT_DB_INDEX = 3;
     /**

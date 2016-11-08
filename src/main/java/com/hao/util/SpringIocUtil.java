@@ -10,7 +10,6 @@ import javax.swing.*;
 /**
  * Created by haojiahong on 16/11/7.
  */
-@Component
 public class SpringIocUtil implements ApplicationContextAware {
     private static ApplicationContext applicationContext;
 

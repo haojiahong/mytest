@@ -1,5 +1,6 @@
 package com.hao.util.lock;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.JedisPool;
 
@@ -8,7 +9,7 @@ import javax.annotation.Resource;
 /**
  * Created by haojiahong on 16/11/4.
  */
-@Service
+@Component
 public class RedisLockFactory {
     private static final String REDIS_LOCK_KEY_PRE = "mytest_redis_lock_";
 
