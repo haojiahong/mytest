@@ -3,7 +3,7 @@ package com.hao.seckill;
 /**
  * Created by haojiahong on 16/11/3.
  */
-public class CacheLockException extends Throwable {
+public class CacheLockException extends RuntimeException {
     public CacheLockException() {
 
     }

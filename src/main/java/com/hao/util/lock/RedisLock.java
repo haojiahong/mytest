@@ -1,5 +1,6 @@
 package com.hao.util.lock;
 
+import com.hao.seckill.CacheLockInterceptor;
 import com.hao.util.JedisClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,7 @@ public class RedisLock {
     private static final String LOCKED = "TRUE";
     public static final long ONE_MILLI_NANOS = 1000000L;
     //锁的超时时间（秒），过期删除
-    public static final int EXPIRE = 300;
+    public static final int EXPIRE = 30;
     //默认超时时间（毫秒）
     public static final long DEFAULT_TIME_OUT = 15 * 1000;
 
@@ -47,9 +48,11 @@ public class RedisLock {
                 log.info("当前请求成功获取到锁，key=" + key);
                 return locked;
             }
-            // 短暂休眠，nano避免出现活锁
-            Thread.sleep(3, r.nextInt(500));
+            log.info("出现锁等待。。。。。");
+            // 短暂休眠，避免可能出现的活锁
+//            Thread.sleep(3, r.nextInt(500));
         }
+        log.info("当前请求锁失败，key=" + key);
         return false;
     }
 

@@ -8,6 +8,7 @@ import redis.clients.jedis.JedisPool;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
@@ -15,6 +16,7 @@ import java.lang.reflect.Proxy;
  * Created by haojiahong on 16/10/27.
  */
 public class CacheLockInterceptor implements InvocationHandler {
+    public static int ERROR_COUNT = 0;
     private Object proxied;
     private RedisLockFactory redisLockFactory;
 
@@ -30,7 +32,7 @@ public class CacheLockInterceptor implements InvocationHandler {
     }
 
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+    public Object invoke(Object proxy, Method method, Object[] args) throws Exception {
         CacheLock cacheLock = method.getAnnotation(CacheLock.class);
         if (null == cacheLock) {
             System.out.println("no cacheLock annotation");
@@ -39,13 +41,20 @@ public class CacheLockInterceptor implements InvocationHandler {
         //获得方法中参数的注解
         Annotation[][] annotations = method.getParameterAnnotations();
         //根据获取到的参数注解和参数列表获得加锁的参数
-        Object lockedObject = getLockedObject(annotations, args);
+        Object lockedObject = null;
+        try {
+            lockedObject = getLockedObject(annotations, args);
+        } catch (CacheLockException e) {
+            e.printStackTrace();
+        }
         String objectValue = lockedObject.toString();
 //        RedisLock redisLock = new RedisLock(objectValue);
         RedisLock lock = redisLockFactory.newRedisLock(objectValue);
         boolean result = lock.lock();
         if (!result) {//取锁失败
+            CacheLockInterceptor.ERROR_COUNT += 1;
             throw new CacheLockException("get lock fail");
+
         }
         try {
             return method.invoke(proxied, args);

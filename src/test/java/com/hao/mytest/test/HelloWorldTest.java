@@ -10,6 +10,9 @@ import com.hao.mytest.effectivejava.twentysix.StackGeneric;
 import org.junit.Test;
 import org.springframework.util.CollectionUtils;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.*;
@@ -26,7 +29,7 @@ public class HelloWorldTest {
         Main main = new Main();
         String result = main.sayHello();
 
-        assertEquals("hello maven", result);
+        assertEquals("hello maven2", result);
     }
 
     @Test
@@ -324,5 +327,67 @@ public class HelloWorldTest {
         System.out.println(111);
     }
 
+    @Test
+    public void testExcel() {
+        String path = "/Users/haojiahong/Downloads/test.xls";
+        try {
+            BufferedWriter buff = new BufferedWriter(new FileWriter(path));
+            buff.write("部门名称\t用户\t电话");
+            buff.write("\r\n");
+            for (int i = 0; i < 50000; i++) {
+                buff.write("短信营业厅\t小吴\t123456");
+                buff.write("\r\n");
+            }
+            buff.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    class R {
+        public Integer sort;
+
+        public R() {
+
+        }
+
+        public R(Integer sort) {
+            this.sort = sort;
+        }
+
+        @Override
+        public String toString() {
+            return sort + "==";
+        }
+
+        public Integer getSort() {
+            return this.sort;
+        }
+    }
+
+    @Test
+    public void testSort() {
+        List<R> rList = Lists.newArrayList();
+        R r1 = new R(1);
+        R r2 = new R(5);
+        R r3 = new R(3);
+        rList.add(r1);
+        rList.add(r2);
+        rList.add(r3);
+        Collections.sort(rList, new Comparator<R>() {
+            @Override
+            public int compare(R o1, R o2) {
+                return o2.sort.compareTo(o1.sort);
+            }
+        });
+        System.out.println(rList);
+    }
+
+    @Test
+    public void testNull() {
+        R r = new R();
+        //虽然没提示警告，但是确实会抛出异常。
+        boolean flag = (r.getSort() == 1);
+
+    }
 }
