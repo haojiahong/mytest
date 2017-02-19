@@ -14,7 +14,9 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
@@ -389,5 +391,101 @@ public class HelloWorldTest {
         //虽然没提示警告，但是确实会抛出异常。
         boolean flag = (r.getSort() == 1);
 
+    }
+
+    @Test
+    public void testIntegerCache() throws Exception {
+        Class cache = Integer.class.getDeclaredClasses()[0]; //1
+        Field myCache = cache.getDeclaredField("cache"); //2
+        myCache.setAccessible(true);//3
+
+        Integer[] newCache = (Integer[]) myCache.get(cache); //4
+        System.out.println(newCache[132]);
+        System.out.println(newCache[133]);
+        newCache[132] = newCache[133]; //5
+
+        int a = 2;
+        int b = a + a;
+        System.out.printf("%d + %d = %d", a, a, b); //
+    }
+
+    class ClassTest {
+        private String name;
+
+        public void info() {
+            System.out.println("info");
+        }
+
+        public void info(String name) {
+            System.out.println(name);
+        }
+
+        private ClassTest() {
+
+        }
+    }
+
+    @Test
+    public void testInt() {
+        int i = -1;
+        int j = i / 5;
+        Integer m = -1;
+        Integer n = 5000 > m ? 5000 : m;
+
+        System.out.println(i);
+        System.out.println(j);
+        System.out.println(m);
+        System.out.println(n);
+    }
+
+    @Test
+    public void testDate() {
+        System.out.println(new Date());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateName = sdf.format(new Date());
+        System.out.println(dateName);
+    }
+
+    @Test
+    public void testStringSet() {
+        Set<String> set = Sets.newHashSet("aaa", "bbb", "ccc");
+//        for (String a : set) {
+//            if ("ccc".equals(a)) {
+//                a = "ddd";
+//            }
+//        }
+        Iterator<String> i = set.iterator();
+        while (i.hasNext()) {
+            Object s = i.next();
+            if ("ccc".equals(s)) {
+                // = "ddd";
+            }
+        }
+        System.out.println(JSON.toJSONString(set));
+    }
+
+    @Test
+    public void testStringList() {
+        List<String> list = Lists.newArrayList("aaa", "bbb", "ccc");
+//        for (String a : list) {
+//            if ("ccc".equals(a)) {
+//                a = "ddd";
+//            }
+//        }
+        for (int i = 0; i < list.size(); i++) {
+            String m = list.get(i);
+            if ("ccc".equals(m)) {
+                list.set(i, "ddd");
+            }
+        }
+
+        ListIterator<String> iterator = list.listIterator();
+        while (iterator.hasNext()) {
+            Object o = iterator.next();
+            if ("aaa".equals(o)) {
+                iterator.set("eee");
+            }
+        }
+        System.out.println(JSON.toJSONString(list));
     }
 }

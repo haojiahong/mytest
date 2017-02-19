@@ -7,8 +7,18 @@ package com.hao.mytest.crazyjava;
 public class CrazyTest {
 
 
-    public void testFixedSizeList(){
-
+    public String testFixedSizeList() {
+        try {
+            String result = "";
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (true){
+                System.out.println("");
+            }
+        }
+        return "";
     }
 
 }
