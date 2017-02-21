@@ -3,12 +3,9 @@ package com.hao.seckill;
 import com.hao.util.SpringIocUtil;
 import com.hao.util.lock.RedisLock;
 import com.hao.util.lock.RedisLockFactory;
-import lombok.extern.slf4j.Slf4j;
-import redis.clients.jedis.JedisPool;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
@@ -31,7 +28,7 @@ public class CacheLockInterceptor implements InvocationHandler {
         return (T) Proxy.newProxyInstance(proxied.getClass().getClassLoader(), proxied.getClass().getInterfaces(), this);
     }
 
-    @Override
+//    @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Exception {
         CacheLock cacheLock = method.getAnnotation(CacheLock.class);
         if (null == cacheLock) {
@@ -88,7 +85,7 @@ public class CacheLockInterceptor implements InvocationHandler {
                     //index = i;
                     try {
                         return args[i].getClass().getField(((LockedComplexObject) annotations[i][j]).field());
-                    } catch (NoSuchFieldException | SecurityException e) {
+                    } catch (Exception e) {
                         throw new CacheLockException("注解对象中没有该属性" + ((LockedComplexObject) annotations[i][j]).field());
                     }
                 }

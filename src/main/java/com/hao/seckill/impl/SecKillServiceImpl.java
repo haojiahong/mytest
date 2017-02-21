@@ -15,12 +15,12 @@ public class SecKillServiceImpl implements SecKillService {
     public static Map<Long, Long> inventory;
 
     static {
-        inventory = new HashMap<>();
+        inventory = new HashMap<Long, Long>();
         inventory.put(10000001L, 10000l);
         inventory.put(10000002L, 10000l);
     }
 
-    @Override
+//    @Override
     public void secKill(String arg1, Long arg2) {
         //最简单的秒杀，这里仅作为demo示例
         reduceInventory(arg2);

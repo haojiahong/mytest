@@ -1,6 +1,9 @@
 package com.hao.myrabbitmq2;
 
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -13,6 +16,9 @@ import java.io.IOException;
 public class MyTqmallMsgSender {
     private final static String EXCHANGE = "iserver_trade_log_exchange";
     private final static String QUEUE_NAME = "iserver_trade_log_queue_hao";
+    private final static String QUEUE_NAME_1 = "iserver_trade_log_queue_hao_1";
+    private final static String ROUTING_KEY = "routing_key";
+
 
     public static void main(String[] args) throws IOException {
 
@@ -21,13 +27,20 @@ public class MyTqmallMsgSender {
         connectionFactory.setUsername("guest");
         connectionFactory.setPassword("guest");
 
-
+        //这里定义了一个转发器directExchange，两个队列queue，queue1，一个绑定建ROUTING_KEY。
+        //将这两个队列通过绑定键帮顶到了转发器上。在管理后台确实看到了两个队列生成。
         RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory);
-//        TopicExchange topicExchange = new TopicExchange(EXCHANGE);
         DirectExchange directExchange = new DirectExchange(EXCHANGE);
+        Queue queue = new Queue(QUEUE_NAME);
+        Queue queue1 = new Queue(QUEUE_NAME_1);
+        Binding binding = BindingBuilder.bind(queue).to(directExchange).with(ROUTING_KEY);
+        Binding binding1 = BindingBuilder.bind(queue1).to(directExchange).with(ROUTING_KEY);
+
         rabbitAdmin.declareExchange(directExchange);
-//        Binding binding = new Binding();
-//        rabbitAdmin.declareBinding(binding);
+        rabbitAdmin.declareQueue(queue);
+        rabbitAdmin.declareQueue(queue1);
+        rabbitAdmin.declareBinding(binding);
+        rabbitAdmin.declareBinding(binding1);
 
 //        Connection connection = connectionFactory.createConnection();
 
@@ -36,27 +49,8 @@ public class MyTqmallMsgSender {
 //                .setContentType(MessageProperties.CONTENT_TYPE_JSON)
 //                .build();
 //        template.send(QUEUE_NAME, message);
-        template.convertAndSend(QUEUE_NAME, "111111");
-        template.convertAndSend(EXCHANGE, "", "11133333");
-        /**
-         * 创建连接连接到MabbitMQ
-         */
-//        ConnectionFactory factory = new ConnectionFactory();
-//        // 设置MabbitMQ所在主机ip或者主机名
-//        factory.setHost("127.0.0.1");
-//        // 创建一个连接
-//        Connection connection = factory.newConnection();
-//        // 创建一个频道
-//        Channel channel = connection.createChannel();
-//        // 指定一个队列
-//        channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-//        // 发送的消息
-//        String message = "hello world!龙轩555";
-//        // 往队列中发出一条消息
-//        channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
-//        System.out.println(" [x] Sent '" + message + "'");
-//        // 关闭频道和连接
-//        channel.close();
-//        connection.close();
+//        template.convertAndSend(QUEUE_NAME, "111111");
+        template.convertAndSend(EXCHANGE, ROUTING_KEY, "111333334444");
+
     }
 }
