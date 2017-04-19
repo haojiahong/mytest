@@ -20,7 +20,7 @@ public class MyInstantiationAwareBeanPostProcessor extends InstantiationAwareBea
 
     public boolean postProcessAfterInstantiation(Object bean, String beanName) throws BeansException {
         if ("car".equals(beanName)) {
-            System.out.println("InstantiationAwareBeanPostProcessor.postProcessAfterInstantiation");
+            System.out.println("MyInstantiationAwareBeanPostProcessor.postProcessAfterInstantiation");
         }
         return true;
     }
@@ -29,7 +29,7 @@ public class MyInstantiationAwareBeanPostProcessor extends InstantiationAwareBea
             PropertyValues pvs, PropertyDescriptor[] pds, Object bean, String beanName)
             throws BeansException {
         if ("car".equals(beanName)) {
-            System.out.println("InstantiationAwareBeanPostProcessor.postProcessPropertyValues");
+            System.out.println("MyInstantiationAwareBeanPostProcessor.postProcessPropertyValues");
         }
         return pvs;
     }

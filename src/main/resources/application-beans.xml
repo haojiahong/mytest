@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/aop
+       		http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="car" class="com.hao.spring.chapter3.Car"
+          init-method="myInit"
+          destroy-method="myDestory"
+          p:brand="红旗CA72"
+          p:maxSpeed="200"
+            />
+
+    <!--<bean id="carServiceWrapper" class="com.hao.spring.chapter3.CarServiceWrapper"/>-->
+
+    <!--<aop:config>-->
+        <!--<aop:pointcut id="carWrapper" expression="execution(* com.hao.spring.chapter3.Car.*(..))"/>-->
+        <!--<aop:advisor advice-ref="carServiceWrapper"-->
+                     <!--pointcut-ref="carWrapper"/>-->
+    <!--</aop:config>-->
+
+    <bean id="myBeanPostProcessor" class="com.hao.spring.chapter3.MyBeanPostProcessor"/>
+    <bean id="myBeanFactoryPostProcessor" class="com.hao.spring.chapter3.MyBeanFactoryPostProcessor"/>
+    <bean id="myInstantiationAwareBeanPostProcessor" class="com.hao.spring.chapter3.MyInstantiationAwareBeanPostProcessor"/>
+
+</beans>
