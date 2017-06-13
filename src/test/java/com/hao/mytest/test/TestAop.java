@@ -15,6 +15,6 @@ public class TestAop {
 
         Dao dao = (Dao) ac.getBean("daoImpl");
         dao.select();
-        dao.insert();
+//        dao.insert();
     }
 }
