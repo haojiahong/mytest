@@ -24,6 +24,16 @@ public class FuncTest {
         Person person = personFactory.create("pee", "hao");
         System.out.println(person.lastName);//hao
 
+        Formula formula = new Formula() {
+            @Override
+            public double calculate(int a) {
+                return sqrt(a);
+            }
+        };
+        System.out.println(formula.calculate(9));
+        System.out.println(formula.sqrt(9));
+
+        Formula formula1 = Math::sqrt;
 
 
     }
